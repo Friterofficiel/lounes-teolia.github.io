@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change this to your default branch if necessary
+      - main
 
 jobs:
   build:
@@ -20,13 +20,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+        with:
+          path: './front'
       - name: Build the project
         run: npm run build
-
+        with:
+          path: './front'
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./front/dist
           cname: friterofficiel.github.io
