@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import FondHeader from '../assets/fondHarry.png'
 
 import Logo from '../assets/logoPoudlard.png'
 const HeaderComp: React.FC = () => {
