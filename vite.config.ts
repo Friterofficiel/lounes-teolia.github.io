@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/lounes-teolia.github.io/front/', // Assurez-vous que ce chemin est correct
+  base: 'https://friterofficiel.github.io/lounes-teolia.github.io/', // Assurez-vous que ce chemin est correct
 });
