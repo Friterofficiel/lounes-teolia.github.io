@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import FondHeader from '../assets/fondHarry.png'
 
+import Logo from '../assets/logoPoudlard.png'
 const HeaderComp: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,11 +27,11 @@ const HeaderComp: React.FC = () => {
   };
 
   return (
-    <header className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/assets/fondHarry.png)' }}>
+    <header className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(lounes-teolia.github.io/assets/fondHarry.png)' }}>
       <nav className={`fixed w-full top-0 left-0 transition-colors duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'} z-10`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-2xl font-bold">
-            <img className='h-20' src="/assets/logoPoudlard.png" alt="Logo" />
+            <img className='h-20' src={Logo} alt="Logo" />
           </div>
           <div className="hidden md:flex space-x-4 text-yellow-600 font-serif">
             <a href="#home" className="hover:text-gray-700">Home</a>

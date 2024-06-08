@@ -1,11 +1,11 @@
 import React from 'react';
-
+import HarryAbout from '../assets/harryAbout.png'
 const AboutComp: React.FC = () => {
   return (
     <section id="about" className="py-16 bg-gray-100">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
         <div className=" md:w-1/3 ml-9">
-          <img src="/assets/harryAbout.png" alt="Poudlard" className="rounded-lg shadow-lg" />
+          <img src={HarryAbout} alt="Poudlard" className="rounded-lg shadow-lg" />
         </div>
         <div className="md:w-1/2 md:ml-8 mt-8 md:mt-0">
           <h2 className="text-3xl md:text-4xl font-bold text-yellow-600">À propos de Poudlard</h2>
