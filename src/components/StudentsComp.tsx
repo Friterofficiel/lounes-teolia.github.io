@@ -16,7 +16,7 @@ const StudentsComp: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const fetchStudents = (house?: string, page: number = 1) => {
-    let url = `http://localhost:3000/real/students?page=${page}`;
+    let url = `https://lounesapihogwartsteolia.netlify.app/.netlify/functions/real/students?page=${page}`;
     if (house) {
       url += `&house=${house}`;
     }
@@ -36,7 +36,7 @@ const StudentsComp: React.FC = () => {
   }, [page]);
 
   const getRandomStudent = () => {
-    axios.get('http://localhost:3000/real/randomstudent')
+    axios.get('https://lounesapihogwartsteolia.netlify.app/.netlify/functions/real/randomstudent')
       .then(response => {
         setRandomStudent(response.data);
       })
