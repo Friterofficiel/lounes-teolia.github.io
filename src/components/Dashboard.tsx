@@ -4,8 +4,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 
+// Interface pour définir le type d'un étudiant
+interface Student {
+  house: string;
+  alternate_names: string[];
+}
+
 const Dashboard = () => {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<Student[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -23,7 +29,8 @@ const Dashboard = () => {
     fetchStudents();
   }, [page]);
 
-  const houseCounts = students.reduce((acc, student) => {
+  // Initialisation des compteurs avec des types appropriés
+  const houseCounts: { [key: string]: number } = students.reduce((acc: { [key: string]: number }, student: Student) => {
     acc[student.house] = (acc[student.house] || 0) + 1;
     return acc;
   }, {});
@@ -33,7 +40,7 @@ const Dashboard = () => {
     value: houseCounts[house]
   }));
 
-  const nameAlternateCounts = students.reduce((acc, student) => {
+  const nameAlternateCounts: { [key: string]: number } = students.reduce((acc: { [key: string]: number }, student: Student) => {
     if (student.alternate_names.length > 0) {
       acc['With Alternate Names'] = (acc['With Alternate Names'] || 0) + 1;
     } else {
@@ -78,7 +85,7 @@ const Dashboard = () => {
               fill="#8884d8"
               dataKey="value"
             >
-              {houseData.map((entry, index) => (
+              {houseData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
@@ -94,7 +101,7 @@ const Dashboard = () => {
             <Tooltip />
             <Legend />
             <Bar dataKey="value">
-              {houseData.map((entry, index) => (
+              {houseData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Bar>
@@ -114,7 +121,7 @@ const Dashboard = () => {
             fill="#82ca9d"
             dataKey="value"
           >
-            {nameAlternateData.map((entry, index) => (
+            {nameAlternateData.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
