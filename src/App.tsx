@@ -2,6 +2,7 @@ import React from 'react';
 import HeaderComp from './components/HeaderComp';
 import AboutComp from './components/AboutComp';
 import StudentsComp from './components/StudentsComp';
+import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
   return (
@@ -9,6 +10,7 @@ const App: React.FC = () => {
       <HeaderComp />
       <AboutComp />
       <StudentsComp />
+      <Dashboard />
     </div>
   );
 };
