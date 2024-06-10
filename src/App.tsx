@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Route path="/lounes-teolia.github.io/profile" element={<ProfilePage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/lounes-teolia.github.io/students" element={<StudentsComp />} />
-          <Route path="https://friterofficiel.github.io/lounes-teolia.github.io/dashboard" element={<Dashboard />} />
+          <Route path="/lounes-teolia.github.io/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="*" element={<div></div>} />
       </Routes>
