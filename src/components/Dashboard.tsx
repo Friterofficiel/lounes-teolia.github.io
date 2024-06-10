@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [user] = useAuthState(auth);
 
   if (!user || !['dumbledore@gmail.com', 'profHogwarts@gmail.com'].includes(user.email!)) {
-    return <Navigate to="lounes-teolia.github.io/login" />;
+    return <Navigate to="/lounes-teolia.github.io/login" />;
   }
   useEffect(() => {
     const fetchStudents = async () => {
