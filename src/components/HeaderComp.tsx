@@ -38,7 +38,7 @@ const HeaderComp: React.FC = () => {
   };
 
   return (
-    <header className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/lounes-teolia.github.io/assets/fondHarry.png)' }}>
+    <header className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(lounes-teolia.github.io/assets/fondHarry.png)' }}>
       <nav className={`fixed w-full top-0 left-0 transition-colors duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'} z-10`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-2xl font-bold flex items-center">
