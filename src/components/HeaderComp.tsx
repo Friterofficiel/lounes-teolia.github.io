@@ -29,12 +29,12 @@ const HeaderComp: React.FC = () => {
   }, []);
 
   const scrollToAbout = () => {
-    navigate('/about');
+    navigate('lounes-teolia.github.io/about');
   };
 
   const handleLogout = async () => {
     await signOut(auth);
-    navigate('/login');
+    navigate('lounes-teolia.github.io/login');
   };
 
   return (
@@ -48,10 +48,10 @@ const HeaderComp: React.FC = () => {
             )}
           </div>
           <div className="hidden md:flex space-x-4 text-yellow-600 font-serif">
-            <Link to="/" className="hover:text-gray-700">Home</Link>
+            <Link to="lounes-teolia.github.io/" className="hover:text-gray-700">Home</Link>
             <button onClick={scrollToAbout} className="hover:text-gray-700">About</button>
-            <Link to="/students" className="hover:text-gray-700">Students</Link>
-            <Link to="/dashboard" className="hover:text-gray-700">Dashboard</Link>
+            <Link to="lounes-teolia.github.io/students" className="hover:text-gray-700">Students</Link>
+            <Link to="lounes-teolia.github.io/dashboard" className="hover:text-gray-700">Dashboard</Link>
             {user ? (
               <>
                 <Link to="/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
@@ -75,17 +75,17 @@ const HeaderComp: React.FC = () => {
         </div>
         {isMenuOpen && (
           <div className="md:hidden bg-yellow-100 shadow-md">
-            <Link to="/" className="block px-4 py-2 hover:bg-yellow-200">Home</Link>
+            <Link to="lounes-teolia.github.io/" className="block px-4 py-2 hover:bg-yellow-200">Home</Link>
             <button onClick={scrollToAbout} className="block w-full text-left px-4 py-2 hover:bg-yellow-200">About</button>
-            <Link to="/students" className="block px-4 py-2 hover:bg-yellow-200">Students</Link>
-            <Link to="/dashboard" className="block px-4 py-2 hover:bg-yellow-200">Dashboard</Link>
+            <Link to="lounes-teolia.github.io/students" className="block px-4 py-2 hover:bg-yellow-200">Students</Link>
+            <Link to="lounes-teolia.github.io/dashboard" className="block px-4 py-2 hover:bg-yellow-200">Dashboard</Link>
             {user ? (
               <>
-                <Link to="/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
+                <Link to="lounes-teolia.github.io/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
                 <button onClick={handleLogout} className="hover:text-gray-700">Logout</button>
               </>
             ) : (
-              <Link to="/login" className="hover:text-gray-700">Login</Link>
+              <Link to="lounes-teolia.github.io/login" className="hover:text-gray-700">Login</Link>
             )}
           </div>
         )}

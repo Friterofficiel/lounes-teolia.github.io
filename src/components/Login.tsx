@@ -14,7 +14,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/students');
+      navigate('lounes-teolia.github.io/students');
     } catch (error) {
       setError('Failed to log in');
     }
@@ -56,7 +56,7 @@ const Login: React.FC = () => {
           </button>
         </form>
         <p className="mt-4 text-center">
-          Pas de compte ? <Link to="/register" className="text-blue-500 hover:underline">S'inscrire</Link>
+          Pas de compte ? <Link to="lounes-teolia.github.io/register" className="text-blue-500 hover:underline">S'inscrire</Link>
         </p>
       </div>
     </div>
