@@ -107,6 +107,7 @@ const ProfilePage: React.FC = () => {
           <button onClick={updateProfileInfo} className="bg-yellow-600 text-white py-2 px-4 rounded hover:bg-yellow-500 mb-4">Sauvegarder les modifications</button>
           {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
+        <h1 className='text-white'>#jkpetasse</h1>
       </div>
     </div>
   );
