@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
+import { Navigate } from 'react-router-dom';
 
 // Interface pour définir le type d'un étudiant
 interface Student {
@@ -14,7 +17,11 @@ const Dashboard = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [user] = useAuthState(auth);
 
+  if (!user || !['dumbledore@gmail.com', 'profHogwarts@gmail.com'].includes(user.email!)) {
+    return <Navigate to="/login" />;
+  }
   useEffect(() => {
     const fetchStudents = async () => {
       try {

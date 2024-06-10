@@ -1,9 +1,16 @@
+// src/components/HeaderComp.tsx
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
+import { signOut } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import Logo from '../assets/logoPoudlard.png';
 
-import Logo from '../assets/logoPoudlard.png'
 const HeaderComp: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,21 +29,37 @@ const HeaderComp: React.FC = () => {
   }, []);
 
   const scrollToAbout = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+    navigate('/about');
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate('/login');
   };
 
   return (
     <header className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(lounes-teolia.github.io/assets/fondHarry.png)' }}>
       <nav className={`fixed w-full top-0 left-0 transition-colors duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'} z-10`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold flex items-center">
             <img className='h-20' src={Logo} alt="Logo" />
+            {user && (
+              <img src={user?.photoURL || 'placeholder.jpg'} alt="Photo de profil" className=" h-16 w-16 rounded-full mr-4 border-2 border-yellow-600" />
+            )}
           </div>
           <div className="hidden md:flex space-x-4 text-yellow-600 font-serif">
-            <a href="#home" className="hover:text-gray-700">Home</a>
-            <a href="#about" className="hover:text-gray-700">About</a>
-            <a href="#students" className="hover:text-gray-700">Students</a>
-            <a href="#contact" className="hover:text-gray-700">Contact</a>
+            <Link to="/" className="hover:text-gray-700">Home</Link>
+            <button onClick={scrollToAbout} className="hover:text-gray-700">About</button>
+            <Link to="/students" className="hover:text-gray-700">Students</Link>
+            <Link to="/dashboard" className="hover:text-gray-700">Dashboard</Link>
+            {user ? (
+              <>
+                <Link to="/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
+                <button onClick={handleLogout} className="hover:text-gray-700">Logout</button>
+              </>
+            ) : (
+              <Link to="/login" className="hover:text-gray-700">Login</Link>
+            )}
           </div>
           <div className="md:hidden">
             <button
@@ -52,10 +75,18 @@ const HeaderComp: React.FC = () => {
         </div>
         {isMenuOpen && (
           <div className="md:hidden bg-yellow-100 shadow-md">
-            <a href="#home" className="block px-4 py-2 hover:bg-yellow-200">Home</a>
-            <a href="#about" className="block px-4 py-2 hover:bg-yellow-200">About</a>
-            <a href="#students" className="block px-4 py-2 hover:bg-yellow-200">Students</a>
-            <a href="#contact" className="block px-4 py-2 hover:bg-yellow-200">Contact</a>
+            <Link to="/" className="block px-4 py-2 hover:bg-yellow-200">Home</Link>
+            <button onClick={scrollToAbout} className="block w-full text-left px-4 py-2 hover:bg-yellow-200">About</button>
+            <Link to="/students" className="block px-4 py-2 hover:bg-yellow-200">Students</Link>
+            <Link to="/dashboard" className="block px-4 py-2 hover:bg-yellow-200">Dashboard</Link>
+            {user ? (
+              <>
+                <Link to="/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
+                <button onClick={handleLogout} className="hover:text-gray-700">Logout</button>
+              </>
+            ) : (
+              <Link to="/login" className="hover:text-gray-700">Login</Link>
+            )}
           </div>
         )}
       </nav>

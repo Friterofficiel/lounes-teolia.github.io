@@ -1,5 +1,9 @@
+// src/components/StudentsComp.tsx
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
+import { Navigate } from 'react-router-dom';
 
 interface Student {
   id: string;
@@ -14,6 +18,11 @@ const StudentsComp: React.FC = () => {
   const [house, setHouse] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [user] = useAuthState(auth);
+
+  if (!user || !['dumbledore@gmail.com', 'profHogwarts@gmail.com'].includes(user.email!)) {
+    return <Navigate to="/login" />;
+  }
 
   const fetchStudents = (house?: string, page: number = 1) => {
     let url = `https://lounesapihogwartsteolia.netlify.app/.netlify/functions/real/students?page=${page}`;
@@ -98,47 +107,47 @@ const StudentsComp: React.FC = () => {
                         ))}
                       </ul>
                     ) : (
-                      'N/A'
+                      <span>None</span>
                     )}
                   </td>
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan={3} className="border px-4 py-2">Loading...</td>
+                  <td colSpan={3} className="border px-4 py-2 text-center">No students found.</td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mt-4">
           <button
+            className="px-4 py-2 bg-yellow-600 text-white rounded"
             onClick={() => handlePageChange(page - 1)}
             disabled={page === 1}
-            className="bg-yellow-600 text-white px-4 py-2 rounded disabled:opacity-50"
           >
             Previous
           </button>
           <span>Page {page} of {totalPages}</span>
           <button
+            className="px-4 py-2 bg-yellow-600 text-white rounded"
             onClick={() => handlePageChange(page + 1)}
             disabled={page === totalPages}
-            className="bg-yellow-600 text-white px-4 py-2 rounded disabled:opacity-50"
           >
             Next
           </button>
         </div>
         <button
           onClick={getRandomStudent}
-          className="mt-8 bg-yellow-600 text-white px-4 py-2 rounded"
+          className="mt-4 px-4 py-2 bg-yellow-600 text-white rounded"
         >
-          Tirer au sort un élève
+          Get Random Student
         </button>
         {randomStudent && (
-          <div className="mt-8 p-4 border rounded bg-gray-100">
-            <h3 className="text-2xl font-bold mb-2">Élève au hasard :</h3>
-            <p><strong>Nom :</strong> {randomStudent.name}</p>
-            <p><strong>Maison :</strong> {randomStudent.house}</p>
-            <p><strong>Surnoms :</strong> {randomStudent.alternate_names.length > 0 ? randomStudent.alternate_names.join(', ') : 'N/A'}</p>
+          <div className="mt-4">
+            <h3 className="text-xl font-bold">Random Student:</h3>
+            <p>Name: {randomStudent.name}</p>
+            <p>House: {randomStudent.house}</p>
+            <p>Alternate Names: {randomStudent.alternate_names.join(', ')}</p>
           </div>
         )}
       </div>
