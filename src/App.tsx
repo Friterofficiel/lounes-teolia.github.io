@@ -16,13 +16,13 @@ const App: React.FC = () => {
     <Router>
       <HeaderComp />
       <Routes>
-        <Route path="lounes-teolia.github.io//login" element={<Login />} />
-        <Route path="lounes-teolia.github.io//register" element={<Register />} />
-        <Route path="lounes-teolia.github.io//about" element={<AboutComp />} />
-        <Route path="lounes-teolia.github.io//profile" element={<ProfilePage />} />
+        <Route path="lounes-teolia.github.io/login" element={<Login />} />
+        <Route path="lounes-teolia.github.io/register" element={<Register />} />
+        <Route path="lounes-teolia.github.io/about" element={<AboutComp />} />
+        <Route path="lounes-teolia.github.io/profile" element={<ProfilePage />} />
         <Route element={<PrivateRoute />}>
-          <Route path="lounes-teolia.github.io//students" element={<StudentsComp />} />
-          <Route path="lounes-teolia.github.io//dashboard" element={<Dashboard />} />
+          <Route path="lounes-teolia.github.io/students" element={<StudentsComp />} />
+          <Route path="lounes-teolia.github.io/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
