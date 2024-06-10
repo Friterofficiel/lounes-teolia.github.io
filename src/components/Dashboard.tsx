@@ -1,8 +1,6 @@
-// src/components/Dashboard.tsx
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import { Navigate } from 'react-router-dom';
@@ -22,6 +20,7 @@ const Dashboard = () => {
   if (!user || !['dumbledore@gmail.com', 'profHogwarts@gmail.com'].includes(user.email!)) {
     return <Navigate to="/lounes-teolia.github.io/login" />;
   }
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -36,7 +35,6 @@ const Dashboard = () => {
     fetchStudents();
   }, [page]);
 
-  // Initialisation des compteurs avec des types appropriés
   const houseCounts: { [key: string]: number } = students.reduce((acc: { [key: string]: number }, student: Student) => {
     acc[student.house] = (acc[student.house] || 0) + 1;
     return acc;
@@ -62,10 +60,10 @@ const Dashboard = () => {
   }));
 
   const HOUSE_COLORS = {
-    Gryffindor: ['#7F0909', '#FFC500'], // Rouge et Or
-    Ravenclaw: ['#2A623D'], // Bleu Foncé
-    Slytherin: ['#FFDB00'], // Vert
-    Hufflepuff: ['#0E1A40'], // Jaune
+    Gryffindor: ['#7F0909', '#FFC500'],
+    Ravenclaw: ['#2A623D'],
+    Slytherin: ['#FFDB00'],
+    Hufflepuff: ['#0E1A40'],
   };
 
   const COLORS = [
@@ -81,59 +79,65 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-white shadow-lg rounded-lg p-4">
           <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">Distribution by House</h2>
-          <PieChart width={400} height={400}>
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                data={houseData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}`}
+                outerRadius={150}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {houseData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="bg-white shadow-lg rounded-lg p-4">
+          <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">Students per House</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={houseData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value">
+                {houseData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      <div className="bg-white shadow-lg rounded-lg p-4 mt-8">
+        <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">Students with Alternate Names</h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
             <Pie
-              data={houseData}
-              cx={200}
-              cy={200}
+              data={nameAlternateData}
+              cx="50%"
+              cy="50%"
               labelLine={false}
               label={({ name, value }) => `${name}: ${value}`}
               outerRadius={150}
-              fill="#8884d8"
+              fill="#82ca9d"
               dataKey="value"
             >
-              {houseData.map((_, index) => (
+              {nameAlternateData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip />
           </PieChart>
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-4">
-          <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">Students per House</h2>
-          <BarChart width={500} height={300} data={houseData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="value">
-              {houseData.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Bar>
-          </BarChart>
-        </div>
-      </div>
-      <div className="bg-white shadow-lg rounded-lg p-4 mt-8">
-        <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">Students with Alternate Names</h2>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={nameAlternateData}
-            cx={200}
-            cy={200}
-            labelLine={false}
-            label={({ name, value }) => `${name}: ${value}`}
-            outerRadius={150}
-            fill="#82ca9d"
-            dataKey="value"
-          >
-            {nameAlternateData.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
+        </ResponsiveContainer>
       </div>
       <div className="flex justify-between items-center mt-8">
         <button
