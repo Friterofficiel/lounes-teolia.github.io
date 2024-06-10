@@ -47,7 +47,7 @@ const HeaderComp: React.FC = () => {
               <img src={user?.photoURL || 'placeholder.jpg'} alt="Photo de profil" className=" h-16 w-16 rounded-full mr-4 border-2 border-yellow-600" />
             )}
           </div>
-          <div className="hidden md:flex space-x-4 text-yellow-600 font-serif">
+          <div className="hidden md:flex space-x-4 items-center text-yellow-600 font-serif">
             <Link to="/lounes-teolia.github.io/" className="hover:text-gray-700">Home</Link>
             <button onClick={scrollToAbout} className="hover:text-gray-700">About</button>
             <Link to="/lounes-teolia.github.io/students" className="hover:text-gray-700">Students</Link>
@@ -55,10 +55,10 @@ const HeaderComp: React.FC = () => {
             {user ? (
               <>
                 <Link to="/lounes-teolia.github.io/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
-                <button onClick={handleLogout} className="hover:text-gray-700">Logout</button>
+                <button onClick={handleLogout} className="hover:text-gray-700 border-2 p-1 text-yellow-600 rounded-lg border-yellow-600">Logout</button>
               </>
             ) : (
-              <Link to="/lounes-teolia.github.io/login" className="hover:text-gray-700">Login</Link>
+              <Link to="/lounes-teolia.github.io/login" className="hover:text-gray-700 border-2 p-1 text-yellow-600 rounded-lg border-yellow-600">Login</Link>
             )}
           </div>
           <div className="md:hidden">
@@ -81,11 +81,11 @@ const HeaderComp: React.FC = () => {
             <Link to="/lounes-teolia.github.io/dashboard" className="block px-4 py-2 hover:bg-yellow-200">Dashboard</Link>
             {user ? (
               <>
-                <Link to="/lounes-teolia.github.io/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
-                <button onClick={handleLogout} className="hover:text-gray-700">Logout</button>
+                <Link to="/lounes-teolia.github.io/profile" className="block px-4 py-2 hover:bg-yellow-200">Profile</Link> {/* Lien vers la page Profile */}
+                <button onClick={handleLogout} className="block px-4 py-2 hover:bg-yellow-200 w-full items-start flex">Logout</button>
               </>
             ) : (
-              <Link to="/lounes-teolia.github.io/login" className="hover:text-gray-700">Login</Link>
+              <Link to="/lounes-teolia.github.io/login" className="block px-4 py-2 hover:bg-red-200">Login</Link>
             )}
           </div>
         )}
