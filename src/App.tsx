@@ -24,7 +24,7 @@ const App: React.FC = () => {
           <Route path="lounes-teolia.github.io/students" element={<StudentsComp />} />
           <Route path="lounes-teolia.github.io/dashboard" element={<Dashboard />} />
         </Route>
-        <Route path="*" element={<div>404 Not Found</div>} />
+        <Route path="*" element={<div></div>} />
       </Routes>
     </Router>
   );
