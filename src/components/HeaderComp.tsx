@@ -54,11 +54,11 @@ const HeaderComp: React.FC = () => {
             <Link to="lounes-teolia.github.io/dashboard" className="hover:text-gray-700">Dashboard</Link>
             {user ? (
               <>
-                <Link to="/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
+                <Link to="lounes-teolia.github.io/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
                 <button onClick={handleLogout} className="hover:text-gray-700">Logout</button>
               </>
             ) : (
-              <Link to="/login" className="hover:text-gray-700">Login</Link>
+              <Link to="lounes-teolia.github.io/login" className="hover:text-gray-700">Login</Link>
             )}
           </div>
           <div className="md:hidden">
