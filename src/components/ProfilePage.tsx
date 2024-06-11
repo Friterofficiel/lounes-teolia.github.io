@@ -89,14 +89,16 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div>
-          <h2 className="text-2xl font-bold mb-4 text-yellow-600">Modifier le profil</h2>
-          <input
-            type="file"
-            onChange={handleImageChange}
-            className="mb-4"
-          />
-          {photoURL && <img src={photoURL} alt="Preview" className="mb-4 rounded-lg max-h-40" />} {/* Utilisez photoURL ici */}
+        <div className=''>
+          <div className='flex flex-col items-start'>
+            <h2 className="text-2xl font-bold mb-4 text-yellow-600">Modifier le profil</h2>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              className="mb-4"
+            />
+            {photoURL && <img src={photoURL} alt="Preview" className="mb-4 rounded-lg max-h-40" />}
+          </div>
           <input
             type="text"
             value={displayName}
