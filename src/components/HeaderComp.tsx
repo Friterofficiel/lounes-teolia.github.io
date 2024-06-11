@@ -1,10 +1,10 @@
-// src/components/HeaderComp.tsx
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/logoPoudlard.png';
+import '../App.css';
 
 const HeaderComp: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,21 +44,21 @@ const HeaderComp: React.FC = () => {
           <div className="text-2xl font-bold flex items-center">
             <img className='h-20' src={Logo} alt="Logo" />
             {user && (
-              <img src={user?.photoURL || 'placeholder.jpg'} alt="Photo de profil" className=" h-16 w-16 rounded-full mr-4 border-2 border-yellow-600" />
+              <img src={user?.photoURL || 'placeholder.jpg'} alt="Photo de profil" className="h-16 w-16 rounded-full mr-4 border-2 border-yellow-600" />
             )}
           </div>
           <div className="hidden md:flex space-x-4 items-center text-yellow-600 font-serif">
-            <Link to="/lounes-teolia.github.io/" className="hover:text-gray-700">Home</Link>
-            <button onClick={scrollToAbout} className="hover:text-gray-700">About</button>
-            <Link to="/lounes-teolia.github.io/students" className="hover:text-gray-700">Students</Link>
-            <Link to="/lounes-teolia.github.io/dashboard" className="hover:text-gray-700">Dashboard</Link>
+            <Link to="/lounes-teolia.github.io/" className="hover:text-gray-700 harry-potter-font text-2xl">Home</Link>
+            <button onClick={scrollToAbout} className="hover:text-gray-700 harry-potter-font text-2xl">About</button>
+            <Link to="/lounes-teolia.github.io/students" className="hover:text-gray-700 harry-potter-font text-2xl">Students</Link>
+            <Link to="/lounes-teolia.github.io/dashboard" className="hover:text-gray-700 harry-potter-font text-2xl">Dashboard</Link>
             {user ? (
               <>
-                <Link to="/lounes-teolia.github.io/profile" className="hover:text-gray-700">Profile</Link> {/* Lien vers la page Profile */}
-                <button onClick={handleLogout} className="hover:text-gray-700 border-2 p-1 text-yellow-600 rounded-lg border-yellow-600">Logout</button>
+                <Link to="/lounes-teolia.github.io/profile" className="hover:text-gray-700 harry-potter-font text-2xl">Profile</Link>
+                <button onClick={handleLogout} className="hover:text-gray-700 harry-potter-font text-2xl border-2 p-1 text-yellow-600 rounded-lg border-yellow-600">Logout</button>
               </>
             ) : (
-              <Link to="/lounes-teolia.github.io/login" className="hover:text-gray-700 border-2 p-1 text-yellow-600 rounded-lg border-yellow-600">Login</Link>
+              <Link to="/lounes-teolia.github.io/login" className="hover:text-gray-700 harry-potter-font text-2xl border-2 p-1 text-yellow-600 rounded-lg border-yellow-600">Login</Link>
             )}
           </div>
           <div className="md:hidden">
@@ -75,23 +75,23 @@ const HeaderComp: React.FC = () => {
         </div>
         {isMenuOpen && (
           <div className="md:hidden bg-yellow-100 shadow-md">
-            <Link to="/lounes-teolia.github.io/" className="block px-4 py-2 hover:bg-yellow-200">Home</Link>
-            <button onClick={scrollToAbout} className="block w-full text-left px-4 py-2 hover:bg-yellow-200">About</button>
-            <Link to="/lounes-teolia.github.io/students" className="block px-4 py-2 hover:bg-yellow-200">Students</Link>
-            <Link to="/lounes-teolia.github.io/dashboard" className="block px-4 py-2 hover:bg-yellow-200">Dashboard</Link>
+            <Link to="/lounes-teolia.github.io/" className=" px-4 py-2 hover:bg-orange-900 hover:text-amber-400 harry-potter-font flex">Home</Link>
+            <button onClick={scrollToAbout} className=" w-full text-left px-4 py-2 hover:bg-orange-900 hover:text-amber-400 harry-potter-font flex">About</button>
+            <Link to="/lounes-teolia.github.io/students" className=" px-4 py-2 hover:bg-orange-900 hover:text-amber-400 harry-potter-font flex">Students</Link>
+            <Link to="/lounes-teolia.github.io/dashboard" className=" px-4 py-2 hover:bg-orange-900 hover:text-amber-400 harry-potter-font flex">Dashboard</Link>
             {user ? (
               <>
-                <Link to="/lounes-teolia.github.io/profile" className="block px-4 py-2 hover:bg-yellow-200">Profile</Link> {/* Lien vers la page Profile */}
-                <button onClick={handleLogout} className="block px-4 py-2 hover:bg-yellow-200 w-full items-start flex">Logout</button>
+                <Link to="/lounes-teolia.github.io/profile" className=" px-4 py-2 hover:bg-orange-900 hover:text-amber-400 harry-potter-font flex">Profile</Link>
+                <button onClick={handleLogout} className=" px-4 py-2 hover:bg-orange-900 hover:text-amber-400 w-full items-start  harry-potter-font flex">Logout</button>
               </>
             ) : (
-              <Link to="/lounes-teolia.github.io/login" className="block px-4 py-2 hover:bg-red-200">Login</Link>
+              <Link to="/lounes-teolia.github.io/login" className=" px-4 py-2 hover:bg-red-200 harry-potter-font flex">Login</Link>
             )}
           </div>
         )}
       </nav>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h1 className="text-4xl md:text-6xl text-red-500 font-bold">Bienvenue à Poudlard</h1>
+        <h1 className="text-4xl md:text-6xl text-red-500 font-bold harry-potter-font">Bienvenue à Poudlard</h1>
         <button
           onClick={scrollToAbout}
           className="mt-8 p-4 rounded-full bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all"

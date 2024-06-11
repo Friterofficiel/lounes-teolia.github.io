@@ -1,5 +1,6 @@
 import React from 'react';
 import HarryAbout from '../assets/harryAbout.png'
+import '../App.css'
 const AboutComp: React.FC = () => {
   return (
     <section id="about" className="py-16 bg-gray-100">
@@ -8,15 +9,18 @@ const AboutComp: React.FC = () => {
           <img src={HarryAbout} alt="Poudlard" className="rounded-lg shadow-lg" />
         </div>
         <div className="md:w-1/2 md:ml-8 mt-8 md:mt-0">
-          <h2 className="text-3xl md:text-4xl font-bold text-yellow-600">À propos de Poudlard</h2>
-          <p className="mt-4 text-lg text-gray-700">
-            Poudlard est une école de sorcellerie où les jeunes sorciers et sorcières viennent apprendre la magie. Fondée il y a plus de mille ans par quatre des plus grands sorciers et sorcières de l'époque, Poudlard est un lieu rempli de mystères, d'aventures et de découvertes.
+          <div className='flex flex-col items-center justify-center mb-20'>
+            <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 harry-potter-font mb-5">About Hogwarts</h2>
+            <hr className='border-1 border-zinc-950  w-64' />
+          </div>
+          <p className="mt-4  text-gray-700 harry-potter-font text-2xl">
+          Hogwarts is a school of witchcraft where young wizards and witches come to learn magic. Founded over a thousand years ago by four of the greatest wizards and witches of the time, Hogwarts is a place filled with mystery, adventure and discovery.
           </p>
-          <p className="mt-4 text-lg text-gray-700">
-            Les élèves de Poudlard sont répartis dans quatre maisons : Gryffondor, Poufsouffle, Serdaigle et Serpentard, chacune ayant ses propres caractéristiques et valeurs. Les professeurs sont des experts dans leurs domaines et enseignent des matières telles que les potions, la défense contre les forces du mal, la métamorphose et bien plus encore.
+          <p className="mt-4  text-gray-700 harry-potter-font text-2xl">
+          Hogwarts students are divided into four houses: Gryffindor, Hufflepuff, Ravenclaw and Slytherin, each with their own characteristics and values. The teachers are experts in their fields and teach subjects such as Potions, Defense Against the Dark Arts, Transfiguration, and much more.
           </p>
-          <p className="mt-4 text-lg text-gray-700">
-            Poudlard est bien plus qu'une école, c'est une seconde maison pour ses élèves. Avec son château majestueux, ses vastes terrains et ses nombreuses créatures magiques, Poudlard offre une expérience unique et inoubliable à tous ceux qui y viennent.
+          <p className="mt-4  text-gray-700 harry-potter-font text-2xl">
+          Hogwarts is much more than a school, it is a second home for its students. With its majestic castle, vast grounds and many magical creatures, Hogwarts offers a unique and unforgettable experience to all who come.
           </p>
         </div>
       </div>
