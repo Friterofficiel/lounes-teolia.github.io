@@ -91,7 +91,7 @@ const HeaderComp: React.FC = () => {
         )}
       </nav>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h1 className="text-4xl md:text-6xl text-red-500 font-bold harry-potter-font">Bienvenue à Poudlard</h1>
+        <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-orange-900   to-yellow-400 inline-block text-transparent bg-clip-text font-bold harry-potter-font">Welcom to Hogwarts</h1>
         <button
           onClick={scrollToAbout}
           className="mt-8 p-4 rounded-full bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all"
