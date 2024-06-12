@@ -1,126 +1,109 @@
-import React, { useEffect, useState } from 'react';
-import { db } from '../firebase';
+import React, { useState } from 'react';
+import classNames from 'classnames';
+
+// Liste de mots cachés à trouver
+const wordsToFind = ['Harry', 'Ron', 'Hermione', 'Gryffindor', 'Slytherin', 'Hufflepuff', 'Ravenclaw', 'Quidditch', 'Wizard', 'Magic'];
+
+// Grille de lettres pour le jeu
+const grid = [
+  ['H', 'A', 'R', 'R', 'Y', 'R', 'A', 'V', 'E', 'N'],
+  ['Y', 'G', 'R', 'Y', 'F', 'F', 'I', 'N', 'D', 'O'],
+  ['D', 'D', 'A', 'F', 'G', 'L', 'Y', 'H', 'R', 'A'],
+  ['E', 'N', 'N', 'C', 'N', 'I', 'F', 'F', 'U', 'W'],
+  ['F', 'L', 'E', 'R', 'U', 'L', 'E', 'G', 'R', 'L'],
+  ['I', 'A', 'T', 'Q', 'W', 'E', 'R', 'Y', 'L', 'O'],
+  ['T', 'H', 'E', 'R', 'M', 'I', 'O', 'N', 'E', 'I'],
+  ['I', 'K', 'O', 'L', 'I', 'V', 'N', 'W', 'U', 'D'],
+  ['T', 'N', 'I', 'W', 'I', 'Z', 'A', 'R', 'D', 'M'],
+  ['H', 'I', 'R', 'L', 'E', 'Y', 'N', 'P', 'L', 'E'],
+];
 
 const GameHogwarts: React.FC = () => {
-  const [cards, setCards] = useState<number[]>([]);
-  const [flippedCards, setFlippedCards] = useState<number[]>([]);
-  const [matchedCards, setMatchedCards] = useState<number[]>([]);
-  const [isChecking, setIsChecking] = useState(false);
-  const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState<number | null>(null);
-  const [playerName, setPlayerName] = useState<string>('');
+  const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
+  const [foundWords, setFoundWords] = useState<string[]>([]);
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    // Fetch high score from Firestore
-    const fetchHighScore = async () => {
-      try {
-        const docRef = await db.collection('highscores').doc('hogwarts').get();
-        if (docRef.exists()) {
-          const data = docRef.data();
-          if (data) {
-            setHighScore(data.score);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching high score:', error);
-      }
-    };
-
-    fetchHighScore();
-  }, []);
-
-  const initializeCards = () => {
-    const shuffledCards = shuffle([...Array(8).keys(), ...Array(8).keys()]);
-    setCards(shuffledCards);
-    setFlippedCards([]);
-    setMatchedCards([]);
-    setScore(0);
-    setIsChecking(false);
-  };
-
-  const shuffle = (array: number[]) => {
-    return array.sort(() => Math.random() - 0.5);
-  };
-
-  const handleCardClick = (index: number) => {
-    if (isChecking || matchedCards.includes(index)) return;
-
-    const newFlippedCards = [...flippedCards, index];
-    setFlippedCards(newFlippedCards);
-
-    if (newFlippedCards.length === 2) {
-      setIsChecking(true);
-      setTimeout(() => checkForMatch(newFlippedCards), 1000);
+  // Vérifier si le mot est présent dans la liste des mots cachés
+  const checkWord = (word: string) => {
+    const foundWord = wordsToFind.find((w) => w.toLowerCase() === word.toLowerCase());
+    if (foundWord && !foundWords.includes(foundWord)) {
+      setFoundWords((prevFoundWords) => [...prevFoundWords, foundWord]);
+      setMessage(`You found: ${foundWord}`);
+    } else {
+      setMessage('Not found!');
     }
   };
 
-  const checkForMatch = (flipped: number[]) => {
-    const [first, second] = flipped;
-    if (cards[first] === cards[second]) {
-      setMatchedCards([...matchedCards, first, second]);
-      setScore(score + 1);
+  // Gérer le relâchement du clic de souris
+  const handleMouseUp = () => {
+    // Construction du mot sélectionné
+    let selectedWord = '';
+    selectedCells.forEach((cell) => {
+      selectedWord += cell;
+    });
+
+    // Vérification du mot
+    if (selectedWord.length > 2) {
+      checkWord(selectedWord);
     }
-    setFlippedCards([]);
-    setIsChecking(false);
+
+    // Réinitialiser les cellules sélectionnées après la vérification
+    setSelectedCells(new Set());
   };
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPlayerName(event.target.value);
+  // Gérer la sélection de cellules
+  const handleCellClick = (row: number, col: number) => {
+    const cellKey = `${row}-${col}`;
+    const newSelectedCells = new Set(selectedCells);
+
+    if (newSelectedCells.has(cellKey)) {
+      newSelectedCells.delete(cellKey);
+    } else {
+      newSelectedCells.add(cellKey);
+    }
+
+    setSelectedCells(newSelectedCells);
   };
 
-  const handleSubmitScore = async () => {
-    if (!playerName || score === 0) return;
-
-    try {
-      const docRef = db.collection('highscores').doc('hogwarts');
-      const doc = await docRef.get();
-
-      if (doc.exists) {
-        const data = doc.data();
-        if (data) {
-          const currentHighScore = data.score || 0;
-          if (score > currentHighScore) {
-            await docRef.set({ name: playerName, score });
-            setHighScore(score);
-          }
-        }
-      } else {
-        await docRef.set({ name: playerName, score });
-        setHighScore(score);
-      }
-    } catch (error) {
-      console.error('Error submitting score:', error);
-    }
+  // Vérifier si une cellule est sélectionnée
+  const isCellSelected = (row: number, col: number) => {
+    const cellKey = `${row}-${col}`;
+    return selectedCells.has(cellKey);
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-4xl font-bold text-center mb-8">Memory Match - Hogwarts Edition</h1>
-
-      <div className="flex justify-center mb-4">
-        <button onClick={initializeCards} className="bg-yellow-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-yellow-500 focus:outline-none">
-          New Game
-        </button>
-      </div>
-
-      <div className="flex justify-center mb-4">
-        <div className="text-lg font-bold mr-4">Score: {score}</div>
-        {highScore !== null && <div className="text-lg font-bold">High Score: {highScore}</div>}
-      </div>
-
-      <div className="flex justify-center flex-wrap gap-4">
-        {cards.map((card, index) => (
-          <div key={index} className={`w-24 h-24 border-2 rounded-md cursor-pointer ${flippedCards.includes(index) || matchedCards.includes(index) ? 'bg-yellow-300' : 'bg-yellow-100'}`} onClick={() => handleCardClick(index)}>
-            <div className="flex justify-center items-center h-full">{card}</div>
-          </div>
+    <div className="flex justify-center items-center h-screen">
+      <div className="grid grid-cols-10 gap-1" onMouseUp={handleMouseUp}>
+        {grid.map((row, rowIndex) => (
+          <React.Fragment key={rowIndex}>
+            {row.map((letter, colIndex) => (
+              <button
+                key={`${rowIndex}-${colIndex}`}
+                onClick={() => handleCellClick(rowIndex, colIndex)}
+                className={classNames(
+                  'w-10 h-10 border border-gray-300 rounded-md flex justify-center items-center text-lg font-bold',
+                  {
+                    'bg-yellow-300': isCellSelected(rowIndex, colIndex),
+                    'text-gray-800': foundWords.some((word) => word.toLowerCase() === letter.toLowerCase()),
+                  }
+                )}
+              >
+                {letter}
+              </button>
+            ))}
+          </React.Fragment>
         ))}
       </div>
-
-      <div className="mt-8 flex justify-center items-center">
-        <input type="text" value={playerName} onChange={handleNameChange} placeholder="Enter your name" className="border-2 border-gray-400 rounded-md py-2 px-4 mr-4 focus:outline-none" />
-        <button onClick={handleSubmitScore} className="bg-yellow-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-yellow-500 focus:outline-none">
-          Submit Score
-        </button>
+      <div className="ml-4 text-gray-800">
+        <h2 className="text-xl font-bold mb-2">Words to Find:</h2>
+        <ul>
+          {wordsToFind.map((word, index) => (
+            <li key={index} className={classNames({ 'line-through': foundWords.includes(word) })}>
+              {word}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4">{message}</p>
       </div>
     </div>
   );
