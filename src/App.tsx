@@ -9,6 +9,7 @@ import Register from './components/Register';
 import PrivateRoute from './components/PrivateRoute';
 import AboutComp from './components/AboutComp';
 import ProfilePage from './components/ProfilePage';
+import GameHogwarts from './components/GameHogwarts';
 
 
 const App: React.FC = () => {
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="/lounes-teolia.github.io/login" element={<Login />} />
         <Route path="/lounes-teolia.github.io/register" element={<Register />} />
         <Route path="/lounes-teolia.github.io/about" element={<AboutComp />} />
+        <Route path="/lounes-teolia.github.io/games" element={<GameHogwarts />} />
         <Route path="/lounes-teolia.github.io/profile" element={<ProfilePage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/lounes-teolia.github.io/students" element={<StudentsComp />} />
