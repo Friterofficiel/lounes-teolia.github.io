@@ -21,7 +21,7 @@ const PrivateRoute: React.FC = () => {
   }
 
   // Otherwise, check if the user is authenticated
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return user ? <Outlet /> : <Navigate to="/lounes-teolia.github.io/login/login" />;
 };
 
 export default PrivateRoute;
